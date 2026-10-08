@@ -1,0 +1,30 @@
+node_modules/
+dist/
+# QA / 临时构建产物目录（不入库，仅本地验收用）
+dist-qa*/
+dist-verify/
+build-qa/
+.mars-qa-temp/
+tsconfig.tsbuildinfo
+*.log
+logs/
+tmp/
+output/
+/shots/
+test-results/
+playwright-report/
+.playwright/
+.playwright-cli/
+.workbuddy/memory/
+.DS_Store
+Thumbs.db
+
+# 部署用 SSH 私钥（禁止提交；公钥可重新生成）
+tools/deploy/ssh/
+
+# 本地环境变量和凭据
+.env
+.env.*
+!.env.example
+*.pem
+*.key

@@ -1,0 +1,1161 @@
+@layer reset, tokens, base, components, pages, motion, responsive;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body, h1, h2, h3, p, ul { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  button, a { font: inherit; }
+  button { border: 0; }
+  img { display: block; max-width: 100%; height: auto; }
+}
+
+@layer tokens {
+  :root {
+    color-scheme: light;
+    --ink: #102f3d;
+    --ink-soft: #4d6873;
+    --paper: #f7fbf8;
+    --paper-warm: #fffaf0;
+    --sky: #cceeff;
+    --solar: #ffb643;
+    --solar-strong: #f98538;
+    --coral: #f36f45;
+    --teal: #20bcb9;
+    --teal-deep: #086b73;
+    --night: #082d3a;
+    --white: #ffffff;
+    --line: rgba(16, 47, 61, 0.15);
+    --shadow-soft: 0 18px 70px rgba(25, 74, 88, 0.18);
+    --shadow-button: 0 13px 32px rgba(220, 96, 38, 0.28);
+    --radius-pill: 999px;
+    --font-display: "Avenir Next", "HarmonyOS Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-body: "Avenir Next", "HarmonyOS Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+}
+
+@layer base {
+  html, body, #root { min-height: 100%; }
+
+  body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button, a { -webkit-tap-highlight-color: transparent; }
+
+  button { cursor: pointer; color: inherit; }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible {
+    outline: 3px solid #0d7484;
+    outline-offset: 4px;
+  }
+
+  ::selection { color: var(--night); background: #ffd98d; }
+}
+
+@layer components {
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    padding: 0;
+    color: var(--ink);
+    background: transparent;
+    white-space: nowrap;
+  }
+
+  .brand__avatar {
+    position: relative;
+    display: block;
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    flex: 0 0 auto;
+    border: 1px solid rgba(16, 47, 61, .18);
+    border-radius: 50%;
+    background: rgba(236, 250, 248, .9);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.7), 0 4px 12px rgba(16,47,61,.1);
+  }
+
+  .brand__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .brand--inverse .brand__avatar { border-color: rgba(255,255,255,.34); background: rgba(255,255,255,.9); }
+
+  .brand__word {
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    line-height: 1;
+  }
+
+  .brand__descriptor {
+    padding-left: 10px;
+    border-left: 1px solid currentColor;
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    opacity: 0.72;
+  }
+
+  .brand--inverse { color: var(--white); }
+
+  .section-kicker {
+    color: var(--teal-deep);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+}
+
+@layer pages {
+  .home-page { min-height: 100%; background: var(--paper-warm); }
+  /* 2026-09-02 修"切换动画左侧上下露残留"：
+     iris 用 clip-path: circle(78%)，四角（尤其左上下）离圆心 93% 落在圆外，
+     首页内容会从圆外漏出。改为进入时把首页整体快速 fade-out，
+     让 iris 展开时首页已经透明。 */
+  .home-page--entering { animation: homeFadeOut 260ms ease forwards; pointer-events: none; }
+  @keyframes homeFadeOut { to { opacity: 0; } }
+
+  .site-header {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 82px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(24px, 4.2vw, 72px);
+  }
+
+  .site-nav { display: flex; align-items: center; }
+
+  .site-nav__cta {
+    min-height: 46px;
+    padding: 0 21px;
+    border-radius: var(--radius-pill);
+    color: #fff;
+    background: #163e4b;
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow: 0 9px 24px rgba(19, 59, 71, 0.18);
+    transition: transform 180ms ease, background 180ms ease;
+  }
+
+  .site-nav__cta:hover { background: #0c6a72; transform: translateY(-2px); }
+
+  .home-hero {
+    position: relative;
+    display: grid;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+    align-items: center;
+  }
+
+  .home-scene {
+    position: absolute;
+    z-index: -4;
+    top: 50%;
+    left: 50%;
+    width: max(100vw, 184.5vh);
+    height: max(100vh, 54.2vw);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .home-scene__base,
+  .home-scene__foreground {
+    position: absolute;
+    inset: -1.5%;
+    width: 103%;
+    height: 103%;
+    object-fit: cover;
+  }
+
+  .home-scene__foreground {
+    z-index: 5;
+  }
+
+  .home-scene__clouds {
+    position: absolute;
+    z-index: 1;
+    top: 11%;
+    left: -8%;
+    width: 72%;
+    height: 28%;
+    opacity: .2;
+    filter: blur(10px);
+    background:
+      radial-gradient(ellipse at 15% 62%, rgba(255,255,255,.95) 0 13%, transparent 34%),
+      radial-gradient(ellipse at 38% 44%, rgba(255,255,255,.82) 0 10%, transparent 30%),
+      radial-gradient(ellipse at 62% 66%, rgba(255,255,255,.9) 0 12%, transparent 32%),
+      radial-gradient(ellipse at 87% 40%, rgba(255,255,255,.68) 0 8%, transparent 26%);
+    mix-blend-mode: screen;
+    animation: cloudDrift 42s ease-in-out infinite alternate;
+  }
+
+  .home-scene__sunwash {
+    position: absolute;
+    z-index: 1;
+    top: 4%;
+    left: 3%;
+    width: 38%;
+    height: 55%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,.72), rgba(255,255,255,0) 68%);
+    filter: blur(34px);
+    opacity: .66;
+  }
+
+  .home-scene__door-signal {
+    position: absolute;
+    z-index: 2;
+    top: 31.5%;
+    right: 10.8%;
+    width: 22%;
+    aspect-ratio: 1;
+    border: 2px solid rgba(67, 228, 236, 0.36);
+    border-radius: 50%;
+    box-shadow: 0 0 32px rgba(47, 220, 228, 0.2), inset 0 0 35px rgba(255, 170, 72, 0.16);
+    opacity: 0.12;
+  }
+
+  .home-scene__kibo-wrap {
+    position: absolute;
+    z-index: 4;
+    right: 40%;
+    bottom: 2.8%;
+    width: clamp(122px, 11.5vw, 198px);
+  }
+
+  .home-scene__kibo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 8px 7px rgba(24, 56, 55, .12));
+  }
+
+  .home-scene__kibo-shadow {
+    position: absolute;
+    z-index: 0;
+    right: 10%;
+    bottom: 0;
+    left: 10%;
+    height: 8%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(31, 45, 34, .42) 0%, rgba(31, 45, 34, .2) 46%, transparent 74%);
+    filter: blur(4px);
+    transform: scaleX(1.14);
+  }
+
+  .home-hero__scrim {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(242,251,251,.98) 0%, rgba(242,251,251,.86) 28%, rgba(242,251,251,.18) 52%, transparent 68%),
+      linear-gradient(180deg, rgba(255,255,255,.18), transparent 28%);
+  }
+
+  .home-hero__copy {
+    position: relative;
+    z-index: 6;
+    width: min(680px, 50vw);
+    margin-left: clamp(28px, 6.2vw, 108px);
+    padding-top: 58px;
+  }
+
+  .home-hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 19px;
+    color: #22606d;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .14em;
+  }
+
+  .home-hero__eyebrow span {
+    display: block;
+    width: 34px;
+    height: 3px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--solar-strong), var(--solar));
+  }
+
+  .home-hero h1 {
+    max-width: 680px;
+    font-family: var(--font-display);
+    font-size: clamp(48px, 4.75vw, 72px);
+    font-weight: 920;
+    letter-spacing: -.045em;
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+
+  .home-hero__mobile-break { display: none; }
+
+  .home-hero h1::after {
+    display: block;
+    width: 74px;
+    height: 9px;
+    margin-top: 19px;
+    content: "";
+    border-radius: 9px;
+    background: linear-gradient(90deg, var(--solar-strong), var(--solar));
+    transform: skewX(-18deg);
+  }
+
+  .home-hero__lead {
+    max-width: 530px;
+    margin-top: 24px;
+    color: #3e606b;
+    font-size: clamp(17px, 1.45vw, 22px);
+    font-weight: 520;
+    line-height: 1.7;
+  }
+
+  .home-hero__trust { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 20px; }
+
+  .home-hero__trust span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #315862;
+    font-size: 13px;
+    font-weight: 720;
+  }
+
+  .home-hero__trust svg { color: #0c9b8f; }
+
+  .primary-entry {
+    display: inline-flex;
+    min-height: 62px;
+    align-items: center;
+    gap: 22px;
+    margin-top: 30px;
+    padding: 6px 7px 6px 27px;
+    border-radius: var(--radius-pill);
+    color: #fff;
+    background: linear-gradient(135deg, #ff9b3f, #f46d42);
+    box-shadow: var(--shadow-button), inset 0 1px 0 rgba(255,255,255,.32);
+    font-size: 16px;
+    font-weight: 850;
+    letter-spacing: .01em;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .primary-entry:hover { transform: translateY(-3px) scale(1.012); box-shadow: 0 18px 38px rgba(220,96,38,.34); }
+  .primary-entry:active { transform: translateY(0) scale(.99); }
+
+  .primary-entry__icon {
+    display: grid;
+    width: 49px;
+    height: 49px;
+    place-items: center;
+    border-radius: 50%;
+    color: #c8582e;
+    background: rgba(255,255,255,.93);
+  }
+
+  .home-hero__note { margin-top: 12px; color: #6d7f83; font-size: 12px; font-weight: 650; }
+
+  .method-section {
+    position: relative;
+    padding: 120px clamp(28px, 7vw, 120px) 135px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 90% 10%, rgba(57,202,195,.14), transparent 27%),
+      linear-gradient(180deg, #fffdf7, #f5fbf8);
+  }
+
+  .method-section::before {
+    position: absolute;
+    top: 58px;
+    right: -70px;
+    width: 250px;
+    height: 250px;
+    content: "";
+    border: 1px solid rgba(20, 123, 128, .16);
+    border-radius: 50%;
+    box-shadow: 0 0 0 32px rgba(20,123,128,.035), 0 0 0 70px rgba(20,123,128,.02);
+  }
+
+  .method-section__heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(280px, .72fr);
+    gap: clamp(44px, 8vw, 130px);
+    align-items: end;
+    margin-top: 17px;
+  }
+
+  .method-section__heading h2 {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 4.3vw, 66px);
+    font-weight: 900;
+    letter-spacing: -.04em;
+    line-height: 1.15;
+  }
+
+  .method-section__heading p { max-width: 530px; padding-bottom: 8px; color: var(--ink-soft); font-size: 17px; line-height: 1.8; }
+
+  .competency-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 64px;
+  }
+
+  .competency-card {
+    --competency-accent: var(--teal-deep);
+    --competency-soft: rgba(15, 126, 130, .1);
+    position: relative;
+    min-height: 226px;
+    padding: 27px 28px 28px;
+    overflow: hidden;
+    border: 1px solid rgba(10, 91, 98, .12);
+    border-radius: 28px 28px 28px 8px;
+    background: rgba(255,255,255,.78);
+    box-shadow: 0 18px 60px rgba(29, 83, 85, .08);
+    backdrop-filter: blur(14px);
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .competency-card::after {
+    position: absolute;
+    right: -42px;
+    bottom: -58px;
+    width: 150px;
+    height: 150px;
+    content: "";
+    border-radius: 50%;
+    background: var(--competency-soft);
+  }
+
+  .competency-card--orange {
+    --competency-accent: #d9782c;
+    --competency-soft: rgba(239, 157, 64, .12);
+  }
+
+  .competency-card:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--competency-accent) 34%, transparent); box-shadow: 0 24px 72px rgba(29,83,85,.13); }
+
+  .competency-card__top { display: flex; align-items: center; justify-content: space-between; }
+
+  .competency-card__icon {
+    display: grid;
+    width: 47px;
+    height: 47px;
+    place-items: center;
+    border-radius: 16px 16px 16px 5px;
+    color: var(--competency-accent);
+    background: var(--competency-soft);
+  }
+
+  .competency-card__icon svg { width: 25px; height: 25px; }
+  .competency-card__index { color: var(--competency-accent); font-size: 12px; font-weight: 900; letter-spacing: .12em; }
+  .competency-card h3 { margin-top: 23px; font-size: 22px; line-height: 1.2; }
+  .competency-card p { position: relative; z-index: 1; max-width: 31ch; margin-top: 12px; color: var(--ink-soft); font-size: 14px; line-height: 1.75; }
+
+  .site-footer { display: flex; min-height: 112px; align-items: center; justify-content: space-between; padding: 0 clamp(28px, 7vw, 120px); color: #45636d; background: #eef7f3; font-size: 13px; }
+
+  /* 2026-09-04 修"黑屏转场左侧露白"：
+     portal 用 clip-path 圆形从右生长，圆外区域透明、露出已 fade 的首页乃至 body 米白底，
+     左下方尤其显白。新增一层"不裁切"的全屏首页底图垫在黑圈之下，黑圈擦除时露出的圆外
+     是官网首页风景而非白底，转场才像"从官网首页进入探索舱"。该层不参与 clip-path，
+     故不会被圆形裁掉。 */
+  .portal-bg {
+    position: fixed;
+    z-index: 99;
+    inset: 0;
+    background-color: #cfeafe;
+    background-image:
+      url('/assets/home/home-foreground.webp'),
+      url('/assets/home/home-base.webp');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .portal-transition {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+    color: #fff;
+    background: #072d38;
+    animation: portalTakeover 1.2s cubic-bezier(.62,.02,.18,1) both;
+  }
+
+  .portal-transition__iris { position: absolute; inset: -20%; background: radial-gradient(circle at 74% 51%, transparent 0 7%, rgba(6,34,42,.12) 15%, rgba(4,26,33,.94) 38%); animation: irisOpen 1.2s cubic-bezier(.7,0,.15,1) both; }
+  /* "进入探索舱"放大到标题级，并由最右侧滑入，配合黑圈从右生长。 */
+  .portal-transition > span { z-index: 2; margin-top: 18vh; font-family: var(--font-display); font-size: clamp(34px, 4.4vw, 58px); font-weight: 920; letter-spacing: .04em; opacity: 0; animation: transitionLabel 1.2s cubic-bezier(.22,.61,.36,1) both; }
+
+  .cabin-page {
+    --mission-accent: #ff8a3d;
+    --mission-accent-soft: #ffd4ae;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    color: #fff;
+    background: #082f3a;
+    isolation: isolate;
+  }
+
+  .cabin-header {
+    position: fixed;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    display: grid;
+    width: 100%;
+    height: 76px;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 0 clamp(20px, 3.2vw, 54px);
+    background: linear-gradient(180deg, rgba(3,28,35,.73), rgba(3,28,35,0));
+  }
+
+  .cabin-header__center { display: flex; align-items: center; gap: 9px; color: rgba(255,255,255,.68); font-size: 10px; font-weight: 800; letter-spacing: .18em; }
+  .cabin-header__actions { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+  .cabin-home { display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; color: #fff; background: rgba(4,32,42,.25); backdrop-filter: blur(10px); transition: background 180ms ease, transform 180ms ease; }
+  .cabin-home:hover { background: rgba(4,32,42,.58); transform: translateY(-1px); }
+
+  .cabin-stage {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: max(100vw, 177.7vh);
+    height: max(100vh, 56.28vw);
+    transform: translate(-50%, -50%);
+  }
+
+  .cabin-stage__shell { position: absolute; z-index: 4; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+  .cabin-console-screen {
+    position: absolute;
+    z-index: 3;
+    top: 67.45%;
+    left: 41.35%;
+    width: 17.25%;
+    height: 6.15%;
+    overflow: hidden;
+    background: #032f38;
+    pointer-events: none;
+  }
+
+  .cabin-console-screen img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  .mission-window {
+    position: absolute;
+    z-index: 2;
+    top: 15.6%;
+    left: 11.85%;
+    width: 76.45%;
+    height: 53.1%;
+    overflow: hidden;
+    border-radius: 10% 10% 7% 7% / 18% 18% 12% 12%;
+    background: #173b46;
+    box-shadow: inset 0 0 64px rgba(14,232,235,.2);
+  }
+
+  .mission-window__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform, opacity, filter; }
+  .mission-window__glass { position: absolute; z-index: 4; inset: 0; background: linear-gradient(152deg, rgba(255,255,255,.14), transparent 21%, transparent 70%, rgba(40,225,224,.08)); box-shadow: inset 0 0 36px rgba(26,230,229,.14); pointer-events: none; }
+  .mission-window__scan { position: absolute; z-index: 5; inset: 0; pointer-events: none; opacity: .13; background: repeating-linear-gradient(180deg, transparent 0 5px, rgba(255,255,255,.1) 6px, transparent 7px); mix-blend-mode: soft-light; }
+
+  .cabin-stage__kibo-wrap {
+    position: absolute;
+    z-index: 12;
+    bottom: 7.4%;
+    left: 12.3%;
+    width: 13.1%;
+  }
+
+  /* 探索舱内的 KIBO 轻微上下浮动，像漂浮在空中；阴影同步收放做出离地感。 */
+  .cabin-stage__kibo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 8px 9px rgba(61,41,27,.16));
+    animation: kiboFloat 4.6s ease-in-out infinite;
+  }
+
+  .cabin-stage__kibo-shadow {
+    position: absolute;
+    z-index: 0;
+    right: 13%;
+    bottom: 0;
+    left: 13%;
+    height: 7.5%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(53,40,32,.48) 0%, rgba(53,40,32,.22) 48%, transparent 76%);
+    filter: blur(4px);
+    transform: scaleX(1.18);
+    animation: kiboShadowFloat 4.6s ease-in-out infinite;
+  }
+
+  .cabin-stage__reflection { position: absolute; z-index: 6; inset: 0; pointer-events: none; background: radial-gradient(circle at 55% 35%, color-mix(in srgb, var(--mission-accent) 18%, transparent), transparent 39%); opacity: .3; mix-blend-mode: screen; transition: background 480ms ease; }
+
+  .cabin-mission {
+    position: absolute;
+    z-index: 13;
+    top: 24.5%;
+    left: 15.4%;
+    width: clamp(250px, 23.5%, 382px);
+    padding: 0;
+    color: #fff;
+    text-shadow: 0 2px 14px rgba(15,31,31,.78), 0 1px 2px rgba(15,31,31,.9);
+  }
+
+  .cabin-mission::before { position: absolute; z-index: -1; top: -24%; right: -24%; bottom: -28%; left: -18%; content: ''; background: radial-gradient(ellipse at 28% 46%, rgba(3,28,32,.62), rgba(3,28,32,.28) 48%, transparent 74%); filter: blur(15px); pointer-events: none; }
+  .cabin-mission__eyebrow { display: flex; align-items: center; gap: 8px; color: #ffd9bb; font-size: clamp(8px, .72vw, 11px); font-weight: 850; letter-spacing: .06em; }
+  .cabin-mission__eyebrow::before { width: 20px; height: 2px; border-radius: 2px; background: var(--mission-accent); box-shadow: 0 0 10px color-mix(in srgb, var(--mission-accent) 75%, transparent); content: ''; }
+  .cabin-mission__eyebrow span { padding: 3px 7px; border: 1px solid rgba(255,255,255,.5); border-radius: 7px; color: #fff; background: color-mix(in srgb, var(--mission-accent) 78%, #74432b); box-shadow: 0 6px 16px rgba(69,35,20,.2); }
+  .cabin-mission h1 { margin-top: 9px; font-family: var(--font-display); font-size: clamp(21px, 2.05vw, 33px); font-weight: 920; letter-spacing: -.035em; line-height: 1.06; text-wrap: balance; }
+  .cabin-mission__summary { max-width: 33ch; margin-top: 10px; color: rgba(255,255,255,.84); font-size: clamp(10px, .78vw, 13px); line-height: 1.52; }
+  .cabin-mission__meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 11px; }
+  .cabin-mission__meta span { display: inline-flex; min-height: 23px; align-items: center; gap: 4px; padding: 2px 8px; border: 1px solid rgba(255,255,255,.24); border-radius: var(--radius-pill); color: rgba(255,255,255,.9); background: rgba(3,34,39,.34); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); font-size: clamp(7px, .6vw, 9px); font-weight: 760; text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+
+  .mission-start {
+    display: inline-flex;
+    min-width: 148px;
+    min-height: 46px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 15px;
+    padding: 0 17px 0 20px;
+    border: 1px solid rgba(255,255,255,.68);
+    border-radius: var(--radius-pill);
+    color: #123b45;
+    background: linear-gradient(135deg, #fff8e9, var(--mission-accent-soft));
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--mission-accent) 32%, transparent), inset 0 1px 0 rgba(255,255,255,.7);
+    text-shadow: none;
+    transition: box-shadow 180ms ease, transform 180ms ease;
+  }
+
+  .mission-start strong { font-size: clamp(11px, .82vw, 14px); line-height: 1; white-space: nowrap; }
+  .mission-start:hover { box-shadow: 0 16px 34px color-mix(in srgb, var(--mission-accent) 42%, transparent), inset 0 1px 0 rgba(255,255,255,.8); transform: translateY(-2px); }
+  .mission-start:active { transform: translateY(0) scale(.985); }
+  .mission-start--locked {
+    cursor: not-allowed;
+    opacity: .6;
+    color: #e7e0f0;
+    background: color-mix(in srgb, var(--mission-accent) 16%, #241c30);
+    border-color: rgba(255,255,255,.28);
+    box-shadow: none;
+  }
+  .mission-start--locked:hover { transform: none; box-shadow: none; }
+
+  /* 任务状态变体：进行中 / 已完成 */
+  .mission-start-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  /* 包进 group 后由 group 统一负责上边距，否则按钮自身的 15px 会再叠一层。 */
+  .mission-start-group .mission-start { margin-top: 0; }
+
+  .mission-start--in-progress {
+    color: #fff8e9;
+    background: color-mix(in srgb, var(--mission-accent) 55%, #241c30);
+    border-color: rgba(255, 255, 255, .5);
+  }
+
+  .mission-start--completed {
+    color: #123b45;
+    background: linear-gradient(135deg, #b8f5c8, #7ce69a);
+    border-color: rgba(255, 255, 255, .7);
+    /* 2026-09-13 老大反馈：任务完成后主按钮禁用（重新体验走旁边的重置按钮）。
+       禁用态要去掉"可点"的一切暗示：箭头已从 DOM 移除，这里压暗 + 换光标。 */
+  }
+
+  .mission-start--completed:disabled {
+    cursor: not-allowed;
+    opacity: 0.72;
+    filter: saturate(0.75);
+  }
+
+  .mission-reset {
+    display: inline-flex;
+    /* 44×44 是纲领第七节的触控热区下限。原 40px 在平板上偏小，
+       10–12 岁学生的手指点偏率明显更高，且这是不可逆操作的入口。 */
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .08);
+    color: #fff8e9;
+    cursor: pointer;
+    transition: background 120ms ease, transform 120ms ease, opacity 120ms ease;
+  }
+
+  .mission-reset:hover:not(:disabled) {
+    background: rgba(255, 255, 255, .16);
+    transform: rotate(-30deg);
+  }
+
+  /* 全新任务没有进度可清：置灰而不是隐藏，
+     否则点下去毫无反应，还先弹一屏「无法撤销」的恐吓文案。 */
+  .mission-reset:disabled {
+    opacity: .38;
+    cursor: default;
+  }
+
+  /* 重置成功回执：按钮文案变化发生在遮罩背后的背景里，学生看不到，必须显式回执。 */
+  .mission-reset-notice {
+    margin: 12px 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border: 1px solid rgba(124, 230, 154, .4);
+    border-radius: var(--radius-pill);
+    background: rgba(124, 230, 154, .12);
+    color: #b9f5cd;
+    font-size: clamp(11px, .84vw, 13px);
+    font-weight: 700;
+    animation: cabin-reset-fade 180ms ease both;
+  }
+
+  /* 重置任务进度 · 二次确认弹窗 */
+  .cabin-reset-confirm {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: grid;
+    place-items: center;
+    text-shadow: none;
+  }
+  .cabin-reset-confirm__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 16, 20, .62);
+    backdrop-filter: blur(4px);
+    animation: cabin-reset-fade 160ms ease both;
+  }
+  .cabin-reset-confirm__card {
+    position: relative;
+    width: min(420px, 86vw);
+    padding: 26px 26px 22px;
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 18px;
+    background: linear-gradient(160deg, rgba(10, 34, 40, .96), rgba(6, 22, 28, .96));
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .08);
+    color: #fff;
+    animation: cabin-reset-pop 200ms cubic-bezier(.2, .8, .2, 1) both;
+  }
+  .cabin-reset-confirm__title {
+    margin: 0 0 10px;
+    font-size: clamp(16px, 1.4vw, 20px);
+    font-weight: 880;
+    letter-spacing: -.01em;
+  }
+  .cabin-reset-confirm__body {
+    margin: 0 0 20px;
+    color: rgba(255, 255, 255, .82);
+    font-size: clamp(12px, .92vw, 14px);
+    line-height: 1.6;
+  }
+  .cabin-reset-confirm__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .cabin-reset-confirm__cancel,
+  .cabin-reset-confirm__confirm {
+    min-height: 40px;
+    padding: 0 18px;
+    border-radius: var(--radius-pill);
+    font-size: clamp(12px, .9vw, 14px);
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  }
+  .cabin-reset-confirm__cancel {
+    border: 1px solid rgba(255, 255, 255, .4);
+    color: #fff;
+    background: rgba(255, 255, 255, .08);
+  }
+  .cabin-reset-confirm__cancel:hover { background: rgba(255, 255, 255, .16); }
+  /*
+    破坏性操作不能是视觉权重最高的那一个。原实现给「确认重置」上了高亮渐变 + 投影，
+    比「取消」更抢眼，是反模式。改为警示色描边 + 半透明底：
+    语义上明确「这是有代价的操作」，视觉上不与默认动作（取消）抢戏。
+  */
+  .cabin-reset-confirm__confirm {
+    border: 1px solid rgba(255, 138, 118, .55);
+    color: #ffb4a0;
+    background: rgba(255, 120, 80, .12);
+  }
+  .cabin-reset-confirm__confirm:hover {
+    background: rgba(255, 120, 80, .22);
+    border-color: rgba(255, 138, 118, .85);
+    color: #ffc9b8;
+  }
+  .cabin-reset-confirm__cancel:active,
+  .cabin-reset-confirm__confirm:active { transform: translateY(0) scale(.97); }
+
+  @keyframes cabin-reset-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes cabin-reset-pop {
+    from { opacity: 0; transform: translateY(12px) scale(.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /*
+    prefers-reduced-motion（纲领第七节）：关闭弹窗入场动画与 hover 位移。
+    注意这里必须显式消费——App.tsx 只写了 data-motion 属性，
+    如果 CSS 不响应，减少动态效果的开关对这一块就是空的。
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .cabin-reset-confirm__backdrop,
+    .cabin-reset-confirm__card,
+    .mission-reset-notice { animation: none; }
+    .mission-reset:hover:not(:disabled) { transform: none; }
+    .cabin-reset-confirm__cancel,
+    .cabin-reset-confirm__confirm,
+    .mission-reset { transition: none; }
+    .cabin-stage__kibo,
+    .cabin-stage__kibo-shadow { animation: none; }
+  }
+
+  .cabin-switcher {
+    position: fixed;
+    z-index: 18;
+    right: 50%;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transform: translateX(50%);
+  }
+
+  .cabin-switcher__arrow { display: grid; width: 52px; height: 52px; place-items: center; border: 1px solid rgba(255,255,255,.34); border-radius: 50%; color: #fff; background: rgba(4,29,38,.5); box-shadow: 0 10px 28px rgba(5,28,34,.22); backdrop-filter: blur(12px); transition: background 180ms ease, transform 180ms ease; }
+  .cabin-switcher__arrow:hover { background: rgba(4,29,38,.78); transform: scale(1.06); }
+
+  .coordinate-rail { position: relative; width: min(800px, 68vw); height: 110px; }
+  .coordinate-rail__arc { position: absolute; top: 3px; left: 50%; width: 96%; height: 116px; border-top: 1px solid rgba(255,255,255,.42); border-radius: 50%; filter: drop-shadow(0 2px 8px rgba(5,34,41,.5)); transform: translateX(-50%); }
+
+  .coordinate-node {
+    --node-x: 0px;
+    --node-x-mobile: 0px;
+    --node-y: 0px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: grid;
+    width: 120px;
+    min-height: 88px;
+    justify-items: center;
+    padding: 0;
+    color: rgba(255,255,255,.58);
+    background: transparent;
+    transform: translateX(calc(-50% + var(--node-x))) translateY(var(--node-y));
+    transition: transform 420ms cubic-bezier(.2,.8,.2,1), color 320ms ease, opacity 320ms ease;
+  }
+
+  .coordinate-node__dot { display: block; width: 10px; height: 10px; border: 2px solid currentColor; border-radius: 50%; background: #0e4c58; box-shadow: 0 0 0 5px rgba(255,255,255,.04); transition: width 220ms ease, height 220ms ease, box-shadow 220ms ease, background 220ms ease; }
+  .coordinate-node__label { margin-top: 10px; font-size: 11px; font-weight: 820; white-space: nowrap; text-shadow: 0 2px 8px rgba(4,28,35,.75); }
+  .coordinate-node__coordinate { margin-top: 1px; font-size: 8px; font-weight: 760; letter-spacing: .1em; opacity: .7; }
+  .coordinate-node--active { color: #fff; transform: translateX(calc(-50% + var(--node-x))) translateY(calc(var(--node-y) - 3px)); }
+  .coordinate-node--active .coordinate-node__dot { width: 16px; height: 16px; border-color: #fff; background: var(--mission-accent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--mission-accent) 18%, transparent), 0 0 22px var(--mission-accent); }
+  .coordinate-node--active .coordinate-node__label { font-size: 12px; }
+
+  .mission-launch { position: fixed; z-index: 90; inset: 0; overflow: hidden; background: #061e27; }
+  .mission-launch__scene { width: 100%; height: 100%; object-fit: cover; animation: missionTakeover 1.2s cubic-bezier(.66,.01,.18,1) both; }
+  .mission-launch__frame { position: absolute; inset: 0; border: 3px solid var(--mission-accent); box-shadow: inset 0 0 70px color-mix(in srgb, var(--mission-accent) 35%, transparent); animation: launchFrame 1.2s ease both; pointer-events: none; }
+
+  .mission-boundary {
+    --mission-accent: #ff8a3d;
+    --mission-accent-soft: #ffd4ae;
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    color: #fff;
+    background: #0a2933;
+  }
+
+  .mission-boundary__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: boundarySettle 1.4s cubic-bezier(.2,.78,.2,1) both; }
+  .mission-boundary__shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,25,33,.94) 0%, rgba(3,25,33,.72) 32%, rgba(3,25,33,.12) 67%, rgba(3,25,33,.2)), linear-gradient(180deg, rgba(3,25,33,.5), transparent 24%, rgba(3,25,33,.28)); }
+  .mission-boundary__header { position: relative; z-index: 4; display: flex; height: 76px; align-items: center; justify-content: space-between; padding: 0 clamp(22px, 4vw, 64px); }
+  .mission-boundary__brief { position: absolute; z-index: 3; top: 50%; left: clamp(28px, 7vw, 116px); width: min(620px, 49vw); transform: translateY(-45%); }
+  .mission-boundary__brief > p:first-child { display: flex; align-items: center; gap: 8px; color: var(--mission-accent-soft); font-size: 12px; font-weight: 850; letter-spacing: .12em; }
+  .mission-boundary h1 { margin-top: 16px; font-family: var(--font-display); font-size: clamp(45px, 5.5vw, 86px); font-weight: 920; letter-spacing: -.045em; line-height: 1.08; text-wrap: balance; }
+  .mission-boundary__summary { max-width: 550px; margin-top: 22px; color: rgba(255,255,255,.82); font-size: clamp(16px, 1.4vw, 21px); line-height: 1.75; }
+  .mission-boundary__meta, .mission-boundary__nodes { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .mission-boundary__meta span, .mission-boundary__nodes span { display: inline-flex; min-height: 31px; align-items: center; gap: 6px; padding: 4px 11px; border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-pill); background: rgba(2,24,31,.24); font-size: 11px; font-weight: 720; backdrop-filter: blur(8px); }
+  .mission-boundary__nodes { margin-top: 9px; }
+  .mission-boundary__nodes span { color: #153642; border-color: transparent; background: color-mix(in srgb, var(--mission-accent-soft) 82%, white); }
+  .mission-boundary__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 29px; }
+  .mission-boundary__actions button { display: inline-flex; min-height: 50px; align-items: center; gap: 10px; padding: 0 19px; border: 1px solid rgba(255,255,255,.3); border-radius: var(--radius-pill); color: #fff; background: rgba(3,25,33,.42); font-size: 13px; font-weight: 850; backdrop-filter: blur(10px); transition: background 180ms ease, transform 180ms ease; }
+  .mission-boundary__actions button:hover { background: rgba(3,25,33,.75); transform: translateY(-2px); }
+  .mission-boundary__actions .mission-boundary__start { color: #173642; border-color: rgba(255,255,255,.55); background: linear-gradient(135deg, #fff8e9, var(--mission-accent-soft)); box-shadow: 0 14px 34px color-mix(in srgb, var(--mission-accent) 28%, transparent); }
+}
+
+@layer motion {
+  @keyframes portalTakeover {
+    0% { opacity: 0; clip-path: circle(2% at 77% 52%); }
+    12% { opacity: 1; }
+    68% { clip-path: circle(78% at 77% 52%); }
+    100% { clip-path: circle(160% at 77% 52%); }
+  }
+
+  @keyframes irisOpen { 0% { transform: scale(.58); opacity: 1; } 72% { transform: scale(1.7); opacity: .72; } 100% { transform: scale(2.3); opacity: 0; } }
+  @keyframes transitionLabel {
+    0% { opacity: 0; transform: translateX(62vw); }
+    34% { opacity: 1; transform: translateX(0); }
+    64% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(-10vw); }
+  }
+
+  @keyframes missionEnterRight { from { opacity: 0; filter: saturate(.7) blur(5px); transform: translateX(8%) scale(1.06); } to { opacity: 1; filter: none; transform: translateX(0) scale(1); } }
+  @keyframes missionEnterLeft { from { opacity: 0; filter: saturate(.7) blur(5px); transform: translateX(-8%) scale(1.06); } to { opacity: 1; filter: none; transform: translateX(0) scale(1); } }
+  @keyframes missionExitLeft { from { opacity: 1; transform: translateX(0) scale(1); } to { opacity: 0; filter: saturate(.65) blur(4px); transform: translateX(-7%) scale(.98); } }
+  @keyframes missionExitRight { from { opacity: 1; transform: translateX(0) scale(1); } to { opacity: 0; filter: saturate(.65) blur(4px); transform: translateX(7%) scale(.98); } }
+
+  .mission-window__image--enter-right { animation: missionEnterRight 620ms cubic-bezier(.2,.78,.2,1) both; }
+  .mission-window__image--enter-left { animation: missionEnterLeft 620ms cubic-bezier(.2,.78,.2,1) both; }
+  .mission-window__image--exit-left { animation: missionExitLeft 620ms cubic-bezier(.2,.78,.2,1) both; }
+  .mission-window__image--exit-right { animation: missionExitRight 620ms cubic-bezier(.2,.78,.2,1) both; }
+
+  @keyframes missionTakeover {
+    0% { clip-path: inset(16% 10% 32% 10% round 42px); transform: scale(.96); filter: saturate(.92); }
+    27% { clip-path: inset(12% 7% 24% 7% round 30px); }
+    62% { clip-path: inset(5% 2% 8% 3% round 24px); transform: scale(1.015); }
+    100% { clip-path: inset(0 round 0); transform: scale(1.085); filter: saturate(1.05); }
+  }
+
+  @keyframes launchFrame { 0% { opacity: 1; transform: scale(.68); } 70% { opacity: .68; transform: scale(1); } 100% { opacity: 0; transform: scale(1.05); } }
+  @keyframes boundarySettle { from { opacity: .3; transform: scale(1.1); } to { opacity: 1; transform: scale(1.03); } }
+
+  .home-scene__door-signal { animation: doorSignal 4.2s ease-in-out infinite; }
+  .mission-window__scan { animation: scanDrift 7s linear infinite; }
+
+  @keyframes doorSignal { 0%, 100% { opacity: .08; transform: scale(.98); } 50% { opacity: .3; transform: scale(1.025); } }
+  @keyframes cloudDrift { from { transform: translateX(-2%); } to { transform: translateX(7%); } }
+  @keyframes scanDrift { from { background-position-y: 0; } to { background-position-y: 90px; } }
+
+  /* 探索舱 KIBO 漂浮：主体轻升、阴影随之收小变淡，营造离地感。 */
+  @keyframes kiboFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-11px); }
+  }
+  @keyframes kiboShadowFloat {
+    0%, 100% { transform: scaleX(1.18) translateY(0); opacity: .92; }
+    50% { transform: scaleX(1.08) translateY(4px); opacity: .66; }
+  }
+
+  [data-motion="reduced"] .home-scene__door-signal,
+  [data-motion="reduced"] .home-scene__clouds,
+  [data-motion="reduced"] .mission-window__scan { animation: none; }
+  [data-motion="reduced"] .cabin-stage__kibo,
+  [data-motion="reduced"] .cabin-stage__kibo-shadow { animation: none; }
+
+  [data-motion="reduced"] .portal-transition { animation: portalReduced 200ms ease both; }
+  [data-motion="reduced"] .portal-transition__iris,
+  [data-motion="reduced"] .portal-transition > span { display: none; }
+  [data-motion="reduced"] .mission-launch__scene { animation: missionReduced 200ms ease both; }
+  [data-motion="reduced"] .mission-launch__frame { animation: launchFrameReduced 200ms ease both; }
+  [data-motion="reduced"] .mission-boundary__poster { animation: none; transform: scale(1.03); }
+  [data-motion="reduced"] .mission-window__image--enter-right,
+  [data-motion="reduced"] .mission-window__image--enter-left { animation: missionFadeIn 160ms linear both; }
+  [data-motion="reduced"] .mission-window__image--exit-right,
+  [data-motion="reduced"] .mission-window__image--exit-left { animation: missionFadeOut 160ms linear both; }
+
+  @keyframes portalReduced { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes missionReduced { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes launchFrameReduced { from { opacity: .45; } to { opacity: 0; } }
+  @keyframes missionFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes missionFadeOut { from { opacity: 1; } to { opacity: 0; } }
+}
+
+@layer responsive {
+  @media (max-width: 1199px) {
+    .home-hero__copy { width: min(560px, 50vw); margin-left: 4.4vw; }
+    .home-scene__kibo-wrap { right: 39%; width: 12vw; }
+    .competency-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 900px) {
+    .brand__descriptor { display: none; }
+    .site-header { height: 72px; }
+    .home-hero__copy { width: 58vw; padding-top: 52px; }
+    .home-hero h1 { font-size: clamp(43px, 7vw, 62px); }
+    .home-hero__scrim { background: linear-gradient(90deg, rgba(244,251,251,.98), rgba(244,251,251,.74) 48%, rgba(244,251,251,.05) 78%); }
+    .method-section__heading { grid-template-columns: 1fr; gap: 25px; }
+    .method-section__heading p { padding: 0; }
+    .cabin-header { grid-template-columns: 1fr auto; }
+    .cabin-header__center { display: none; }
+    .coordinate-rail { width: 68vw; }
+    .coordinate-node { width: 84px; }
+  }
+
+  @media (max-width: 767px) {
+    .site-header { position: absolute; height: 68px; padding: 0 18px; }
+    .site-nav__cta { min-height: 42px; padding: 0 15px; font-size: 12px; }
+    .brand__avatar { width: 32px; height: 32px; }
+    .brand__word { font-size: 18px; }
+
+    .home-hero { min-height: 100svh; align-items: start; }
+    .home-scene { top: 0; left: 0; width: 100%; height: 100%; transform: none; }
+    .home-scene__base, .home-scene__foreground { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+    .home-scene__foreground { opacity: .7; }
+    .home-scene__clouds { top: 12%; left: -24%; width: 115%; height: 22%; opacity: .16; }
+    .home-scene__sunwash { top: 0; left: -20%; width: 110%; height: 58%; }
+    .home-scene__door-signal { top: 48%; right: 2%; width: 62vw; }
+    .home-scene__kibo-wrap { right: auto; bottom: 4.5%; left: 8%; width: clamp(112px, 31vw, 152px); }
+    .home-hero__scrim { background: linear-gradient(180deg, rgba(244,251,251,.98) 0 39%, rgba(244,251,251,.64) 54%, rgba(244,251,251,.06) 76%); }
+    .home-hero__copy { width: auto; margin: 0 20px; padding-top: 103px; }
+    .home-hero h1 { max-width: 340px; font-size: clamp(39px, 11vw, 52px); line-height: 1.07; }
+    .home-hero__mobile-break { display: inline; }
+    .home-hero h1::after { width: 58px; height: 7px; margin-top: 14px; }
+    .home-hero__eyebrow { margin-bottom: 12px; font-size: 10px; }
+    .home-hero__lead { max-width: 350px; margin-top: 17px; font-size: 15px; line-height: 1.65; }
+    .home-hero__trust { max-width: 340px; margin-top: 13px; gap: 5px 12px; }
+    .home-hero__trust span { font-size: 11px; }
+    .primary-entry { min-height: 56px; margin-top: 20px; padding-left: 21px; gap: 13px; font-size: 14px; }
+    .primary-entry__icon { width: 45px; height: 45px; }
+    .home-hero__note { display: none; }
+    .method-section { padding: 85px 20px 92px; }
+    .method-section__heading h2 { font-size: clamp(34px, 9vw, 46px); }
+    .method-section__heading p { font-size: 15px; }
+    .competency-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 45px; }
+    .competency-card { min-height: 0; padding: 23px 22px 22px 82px; border-radius: 22px 22px 22px 7px; }
+    .competency-card__top { position: absolute; top: 22px; right: 20px; bottom: auto; left: 22px; }
+    .competency-card__icon { width: 44px; height: 44px; }
+    .competency-card h3 { margin-top: 0; font-size: 19px; }
+    .competency-card p { margin-top: 7px; font-size: 13px; }
+
+    .site-footer { min-height: 130px; flex-direction: column; justify-content: center; gap: 10px; padding: 24px; text-align: center; }
+
+    .portal-transition__iris { background: radial-gradient(circle at 70% 62%, transparent 0 8%, rgba(6,34,42,.22) 18%, rgba(4,26,33,.96) 40%); }
+
+    .cabin-header { height: 67px; padding: 0 15px; }
+    .cabin-stage { top: 0; left: calc(50% - 88.85vh); width: 177.7vh; height: 100vh; transform: none; }
+    .cabin-stage__kibo-wrap { position: fixed; bottom: 72px; left: 12px; width: 112px; }
+
+    .cabin-mission {
+      position: fixed;
+      right: 14px;
+      bottom: 218px;
+      left: 14px;
+      width: auto;
+      padding: 0 17px;
+    }
+
+    .cabin-mission::before { top: -12%; right: -6%; bottom: -14%; left: -8%; }
+    .cabin-mission__eyebrow { gap: 6px; font-size: 8px; }
+    .cabin-mission__eyebrow span { padding: 3px 5px; }
+    .cabin-mission h1 { margin-top: 6px; font-size: 23px; }
+    .cabin-mission__summary { margin-top: 7px; font-size: 11px; line-height: 1.42; }
+    .cabin-mission__meta { margin-top: 8px; }
+    .cabin-mission__meta span { min-height: 20px; padding: 1px 7px; font-size: 8px; }
+    .cabin-mission__meta span:nth-child(n+2) { display: none; }
+    .mission-start { min-width: 142px; min-height: 46px; margin-top: 0; gap: 14px; padding: 0 15px 0 18px; }
+    .mission-start-group { margin-top: 12px; }
+    .mission-start strong { font-size: 13px; }
+
+    .cabin-switcher { right: 10px; bottom: max(15px, env(safe-area-inset-bottom)); left: 10px; justify-content: space-between; gap: 8px; transform: none; }
+    .cabin-switcher__arrow { width: 44px; height: 44px; flex: 0 0 auto; }
+    .coordinate-rail { width: calc(100vw - 112px); height: 75px; overflow: hidden; }
+    .coordinate-rail__arc { width: 130%; }
+    .coordinate-node { width: 72px; }
+    .coordinate-node { transform: translateX(calc(-50% + var(--node-x-mobile))) translateY(var(--node-y)); }
+    .coordinate-node--active { transform: translateX(calc(-50% + var(--node-x-mobile))) translateY(calc(var(--node-y) - 3px)); }
+    .coordinate-node__label { max-width: 72px; overflow: hidden; text-overflow: ellipsis; font-size: 9px; }
+    .coordinate-node__coordinate { font-size: 7px; }
+
+    .mission-boundary__poster { object-position: 60% center; }
+    .mission-boundary__shade { background: linear-gradient(180deg, rgba(3,25,33,.65), rgba(3,25,33,.3) 26%, rgba(3,25,33,.88) 67%, rgba(3,25,33,.97)); }
+    .mission-boundary__header { height: 67px; padding: 0 15px; }
+    .mission-boundary__brief { top: auto; right: 21px; bottom: max(30px, env(safe-area-inset-bottom)); left: 21px; width: auto; transform: none; }
+    .mission-boundary h1 { font-size: clamp(38px, 10.8vw, 54px); }
+    .mission-boundary__summary { margin-top: 15px; font-size: 14px; line-height: 1.65; }
+    .mission-boundary__meta { margin-top: 15px; }
+  }
+
+  @media (max-height: 720px) and (min-width: 768px) {
+    .cabin-switcher { bottom: 0; }
+    .coordinate-rail { height: 82px; }
+    .coordinate-rail__arc { height: 88px; }
+    .coordinate-node { min-height: 72px; }
+    .coordinate-node__label { margin-top: 6px; }
+    .home-hero__copy { transform: scale(.9); transform-origin: left center; }
+  }
+
+  @media (max-height: 520px) and (min-width: 768px) {
+    .cabin-stage { transform: translate(-50%, -50%); }
+    .cabin-stage__kibo-wrap { bottom: 13%; }
+    .home-hero__copy { transform: scale(.82); }
+  }
+
+  @media (prefers-contrast: more) {
+    .home-hero__scrim { background: linear-gradient(90deg, #f4fbfb 0 42%, rgba(244,251,251,.5) 65%, transparent 78%); }
+    .cabin-mission { padding: 14px; border: 2px solid #fff; border-radius: 18px; color: #fff; background: rgba(2,24,31,.9); text-shadow: none; }
+    .coordinate-node__dot, .cabin-switcher__arrow { border-width: 2px; }
+  }
+}
+
+/* 火星 3D 任务（React.lazy）区块加载兜底：主题化加载态，避免导航到任务出现白屏/视觉断裂。 */
+.mission-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: radial-gradient(circle at 50% 42%, #2a3b45 0%, #16242c 70%, #0e171c 100%);
+  color: #eaf4f8;
+  font-family: var(--font-display);
+}
+.mission-loading__ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, .18);
+  border-top-color: var(--mission-accent, #ff8a3d);
+  animation: missionSpin .9s linear infinite;
+}
+.mission-loading__label {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: .12em;
+  opacity: .85;
+}
+@keyframes missionSpin { to { transform: rotate(360deg); } }
+[data-motion="reduced"] .mission-loading__ring { animation: none; }
