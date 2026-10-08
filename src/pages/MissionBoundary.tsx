@@ -14,7 +14,7 @@ export function MissionBoundary({ mission, onBack, onStart }: MissionBoundaryPro
   useEffect(() => {
     if (!onStart) return
     const image = new Image()
-    image.src = '/assets/missions/mars-simulator-base-v1.webp'
+    image.src = `${import.meta.env.BASE_URL}assets/missions/mars-simulator-base-v1.webp`
   }, [onStart])
 
   return (

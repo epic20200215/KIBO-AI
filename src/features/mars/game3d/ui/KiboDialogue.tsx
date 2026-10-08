@@ -12,10 +12,10 @@ import { kiboLineFor } from '../kiboLines'
 
 /** KIBO 2D 形象按情绪切换（素材在 public/assets/kibo/）。 */
 const MOOD_IMAGE: Record<string, string> = {
-  guide: '/assets/kibo/kibo-welcome.webp',
-  idle: '/assets/kibo/kibo-welcome.webp',
-  alert: '/assets/kibo/kibo-mission-alert-v1.webp',
-  celebrate: '/assets/kibo/kibo-mission-celebrate-v1.webp',
+  guide: `${import.meta.env.BASE_URL}assets/kibo/kibo-welcome.webp`,
+  idle: `${import.meta.env.BASE_URL}assets/kibo/kibo-welcome.webp`,
+  alert: `${import.meta.env.BASE_URL}assets/kibo/kibo-mission-alert-v1.webp`,
+  celebrate: `${import.meta.env.BASE_URL}assets/kibo/kibo-mission-celebrate-v1.webp`,
 }
 
 export type KiboDialogueProps = {

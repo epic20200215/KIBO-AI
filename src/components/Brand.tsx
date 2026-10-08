@@ -7,7 +7,7 @@ export function Brand({ onClick, inverse = false }: BrandProps) {
   const content = (
     <>
       <span className="brand__avatar" aria-hidden="true">
-        <img src="/assets/kibo/kibo-head.webp" alt="" />
+        <img src={`${import.meta.env.BASE_URL}assets/kibo/kibo-head.webp`} alt="" />
       </span>
       <span className="brand__word">KIBO</span>
       <span className="brand__descriptor">AI 素养探索基地</span>

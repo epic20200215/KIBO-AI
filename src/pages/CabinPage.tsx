@@ -215,16 +215,16 @@ export function CabinPage({
         </div>
 
         <div className="cabin-console-screen" aria-hidden="true">
-          <img src="/assets/cabin/cabin-console-standby-v1.webp" alt="" width="1600" height="320" />
+          <img src={`${import.meta.env.BASE_URL}assets/cabin/cabin-console-standby-v1.webp`} alt="" width="1600" height="320" />
         </div>
 
-        <img className="cabin-stage__shell" src="/assets/cabin/cabin-shell-front-v4.webp" alt="" width="1672" height="941" />
+        <img className="cabin-stage__shell" src={`${import.meta.env.BASE_URL}assets/cabin/cabin-shell-front-v4.webp`} alt="" width="1672" height="941" />
 
         <div className="cabin-stage__kibo-wrap">
           <span className="cabin-stage__kibo-shadow" aria-hidden="true" />
           <img
             className="cabin-stage__kibo"
-            src="/assets/kibo/kibo-welcome.webp"
+            src={`${import.meta.env.BASE_URL}assets/kibo/kibo-welcome.webp`}
             alt="KIBO 任务向导"
             width="1211"
             height="1299"

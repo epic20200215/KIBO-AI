@@ -16,7 +16,7 @@
 import { useEffect } from 'react'
 
 /** 结算时刻用 KIBO 的庆祝形象。 */
-const AVATAR = '/assets/kibo/kibo-mission-celebrate-v1.webp'
+const AVATAR = `${import.meta.env.BASE_URL}assets/kibo/kibo-mission-celebrate-v1.webp`
 
 export type KiboEndTalkProps = {
   /** 当前地图标题（火星一号 / 火星二号），用于在台词里点出这次解决的具体问题。 */

@@ -14,7 +14,7 @@
  *  此时**不能静默失败**（静默 = 用户完全不知道有旁白），必须让 UI 显示兜底按钮。
  */
 
-const VOICE_SRC = '/assets/kibo/voice-onboarding.mp3'
+const VOICE_SRC = `${import.meta.env.BASE_URL}assets/kibo/voice-onboarding.mp3`
 
 let voice: HTMLAudioElement | null = null
 

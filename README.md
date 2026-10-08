@@ -26,8 +26,12 @@ npm run preview
 
 ## 发布状态
 
-此次只上传正式网站源码与运行素材，尚未启用 GitHub Pages。
+网站地址为 https://epic20200215.github.io/KIBO-AI/ 。
 
-若部署到本仓库的 GitHub Pages，预期地址为 `https://epic20200215.github.io/KIBO-AI/`。发布前需设置 Vite 的 `/KIBO-AI/` base，并使组件中的图片、预加载资源与音频地址使用相同的部署前缀；仅修改 Vite base 不足以处理现有代码中的根路径资源地址。
+GitHub Pages 使用 `.github/workflows/pages.yml` 构建和发布；推送到 `main` 后自动执行类型检查、测试和生产构建，全部通过后才部署。
+
+Pages 构建命令为 `npm run build -- --mode github-pages`，使用 `/KIBO-AI/` base。组件图片、预加载资源与音频统一跟随 `import.meta.env.BASE_URL`；普通 `npm run dev` 和 `npm run build` 仍使用根路径 `/`。URL hash 路由可直接打开和刷新。
+
+本地预览 Pages 构建时，使用 `npm run preview -- --mode github-pages`，再打开终端显示的 `/KIBO-AI/` 地址。构建与预览模式必须一致。
 
 私钥、服务器部署配置、开发草稿、截图产物与日志不包含在本次上传中。素材生成记录见 `docs/素材清单与生成记录.md`。本仓库未授予额外的代码或素材再分发许可。

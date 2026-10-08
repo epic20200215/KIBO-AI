@@ -95,7 +95,7 @@ export function Onboarding({ onDismiss, worldIndex = 0 }: OnboardingProps) {
     <div className="mars-onboard" role="dialog" aria-modal="true" aria-label="任务引导">
       <div className="mars-onboard__card">
         <div className="mars-onboard__kibo" aria-hidden="true">
-          <img src="/assets/kibo/kibo-head.webp" alt="" />
+          <img src={`${import.meta.env.BASE_URL}assets/kibo/kibo-head.webp`} alt="" />
         </div>
         <h2 className="mars-onboard__title">欢迎来到火星基地</h2>
         <p className="mars-onboard__lead">

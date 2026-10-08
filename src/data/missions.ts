@@ -14,7 +14,7 @@ export const missions: Mission[] = [
     knowledgeNodes: ['感知', '路径规划', '目标权衡'],
     accent: '#ff8a3d',
     accentSoft: '#ffd4ae',
-    poster: '/assets/missions/mars.webp',
+    poster: `${import.meta.env.BASE_URL}assets/missions/mars.webp`,
   },
   {
     id: 'infinite-maze',
@@ -29,7 +29,7 @@ export const missions: Mission[] = [
     knowledgeNodes: ['状态与动作', '奖励', '反馈'],
     accent: '#31c6c9',
     accentSoft: '#b7f2ef',
-    poster: '/assets/missions/maze.webp',
+    poster: `${import.meta.env.BASE_URL}assets/missions/maze.webp`,
   },
   {
     id: 'dinosaur-prints',
@@ -44,7 +44,7 @@ export const missions: Mission[] = [
     knowledgeNodes: ['特征', '分类', '不确定性'],
     accent: '#f2b63f',
     accentSoft: '#ffe7a5',
-    poster: '/assets/missions/dinosaur.webp',
+    poster: `${import.meta.env.BASE_URL}assets/missions/dinosaur.webp`,
   },
   {
     id: 'whale-song',
@@ -59,7 +59,7 @@ export const missions: Mission[] = [
     knowledgeNodes: ['声音特征', '阈值', '人类复核'],
     accent: '#21b8e6',
     accentSoft: '#a9eaff',
-    poster: '/assets/missions/ocean.webp',
+    poster: `${import.meta.env.BASE_URL}assets/missions/ocean.webp`,
   },
   {
     id: 'micro-census',
@@ -74,7 +74,7 @@ export const missions: Mission[] = [
     knowledgeNodes: ['图像分割', '基准答案', '误差'],
     accent: '#4ed9cc',
     accentSoft: '#b9f5ed',
-    poster: '/assets/missions/micro.webp',
+    poster: `${import.meta.env.BASE_URL}assets/missions/micro.webp`,
   },
 ]
 

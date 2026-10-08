@@ -1271,7 +1271,7 @@ function KiboBubble({
       onClick={onDismiss}
     >
       <span className="mars-hud__kibo-avatar" aria-hidden="true">
-        <img src="/assets/kibo/kibo-head.webp" alt="" />
+        <img src={`${import.meta.env.BASE_URL}assets/kibo/kibo-head.webp`} alt="" />
       </span>
       <p className="mars-hud__kibo-text">{line.text}</p>
     </div>

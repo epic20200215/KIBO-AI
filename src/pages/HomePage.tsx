@@ -20,9 +20,9 @@ export function HomePage({ onEnterComplete }: HomePageProps) {
 
   useEffect(() => {
     [
-      '/assets/cabin/cabin-shell-front-v4.webp',
-      '/assets/cabin/cabin-console-standby-v1.webp',
-      '/assets/missions/mars.webp',
+      `${import.meta.env.BASE_URL}assets/cabin/cabin-shell-front-v4.webp`,
+      `${import.meta.env.BASE_URL}assets/cabin/cabin-console-standby-v1.webp`,
+      `${import.meta.env.BASE_URL}assets/missions/mars.webp`,
     ].forEach((src) => {
       const image = new Image()
       image.src = src
@@ -48,15 +48,15 @@ export function HomePage({ onEnterComplete }: HomePageProps) {
       <main>
         <section className="home-hero">
           <div className="home-scene" aria-hidden="true">
-            <img className="home-scene__base" src="/assets/home/home-base.webp" alt="" width="1736" height="941" />
+            <img className="home-scene__base" src={`${import.meta.env.BASE_URL}assets/home/home-base.webp`} alt="" width="1736" height="941" />
             <div className="home-scene__clouds" />
             <div className="home-scene__sunwash" />
             <div className="home-scene__door-signal" />
             <div className="home-scene__kibo-wrap">
               <span className="home-scene__kibo-shadow" />
-              <img className="home-scene__kibo" src="/assets/kibo/kibo-welcome.webp" alt="" width="1211" height="1299" />
+              <img className="home-scene__kibo" src={`${import.meta.env.BASE_URL}assets/kibo/kibo-welcome.webp`} alt="" width="1211" height="1299" />
             </div>
-            <img className="home-scene__foreground" src="/assets/home/home-foreground.webp" alt="" width="1736" height="941" />
+            <img className="home-scene__foreground" src={`${import.meta.env.BASE_URL}assets/home/home-foreground.webp`} alt="" width="1736" height="941" />
           </div>
 
           <div className="home-hero__scrim" aria-hidden="true" />
